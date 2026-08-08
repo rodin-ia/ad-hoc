@@ -1,0 +1,15 @@
+[Unit]
+Description=True IMAP Tunnel
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=master
+Group=master
+ExecStart=/opt/tits/true-imap-tunnel -config /opt/tits/S.yaml
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

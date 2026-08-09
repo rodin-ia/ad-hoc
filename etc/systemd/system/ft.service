@@ -11,7 +11,15 @@ WorkingDirectory=/opt/ft
 
 EnvironmentFile=/etc/ft.env
 
-ExecStart=/opt/ft/ft-linux-x64 <параметры>
+ExecStart=/opt/ft/ft-linux-arm64 \
+        --s3 \
+        --bucket ${FT_S3_BUCKET} \
+        --region ${FT_S3_REGION} \
+        --endpoint ${FT_S3_ENDPOINT} \
+        --write ${FT_WRITE} \
+        --read ${FT_READ} \
+        ${FT_OTHER}
+
 
 Restart=on-failure
 RestartSec=5

@@ -4,7 +4,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-WorkingDirectory=%h
+WorkingDirectory=%h/.local/share/file-tunnel
 EnvironmentFile=%h/.config/ft.env
 
 ExecStart=%h/.bin/ft-linux-x64 \

@@ -1,1 +1,23 @@
-test
+[Unit]
+Description=File Tunnel
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=%h
+EnvironmentFile=%h/.config/ft.env
+
+ExecStart=%h/.bin/ft-linux-x64 \
+        --s3 \
+        --bucket ${FT_S3_BUCKET} \
+        --region ${FT_S3_REGION} \
+        --endpoint ${FT_S3_ENDPOINT} \
+        --write ${FT_WRITE} \
+        --read ${FT_READ} \
+        ${FT_OTHER}
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

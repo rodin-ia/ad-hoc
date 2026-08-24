@@ -1,0 +1,40 @@
+#!/bin/sh /etc/rc.common
+
+START=95
+STOP=10
+
+USE_PROCD=1
+
+PROG="/opt/file-tunnel/ft-linux-musl-x64"
+ENV_FILE="/etc/file-tunnel.env"
+
+start_service() {
+    . "$ENV_FILE"
+
+    procd_open_instance
+
+    procd_set_param env \
+        FT_S3_ACCESS_KEY="$FT_S3_ACCESS_KEY" \
+        FT_S3_SECRET_KEY="$FT_S3_SECRET_KEY"
+
+
+    procd_set_param command "$PROG" \
+        --s3 \
+        --bucket "$FT_S3_BUCKET" \
+        --region "$FT_S3_REGION" \
+        --endpoint "$FT_S3_ENDPOINT" \
+        --write "$FT_WRITE" \
+        --read "$FT_READ" \
+        "$FT_OTHER"
+
+    procd_set_param user nobody
+    procd_set_param group nogroup
+
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+
+
+    procd_set_param respawn 3600 5 5
+
+    procd_close_instance
+}

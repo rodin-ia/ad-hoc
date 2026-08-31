@@ -1,6 +1,30 @@
 #!/sbin/openrc-run
 
 name="opensoho"
+
+command="/opt/opensoho/opensoho"
+command_args="$OPENSOHO_ADDR:$OPENSOHO_PORT"
+command_user="opensoho:opensoho"
+directory="/opt/opensoho"
+
+output_log="/var/log/opensoho.log"
+error_log="/var/log/opensoho.log"
+
+depend() {
+    need net
+}
+
+start_pre() {
+    . /etc/opensoho.env
+    export OPENSOHO_SHARED_SECRET
+
+    command_args="$OPENSOHO_ADDR:$OPENSOHO_PORT"
+}
+
+supervise_daemon=true
+respawn_delay=5#!/sbin/openrc-run
+
+name="opensoho"
 command="/opt/opensoho/opensoho"
 command_user="opensoho:opensoho"
 

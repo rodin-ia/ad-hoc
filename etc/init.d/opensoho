@@ -12,7 +12,7 @@ start_pre() {
     . /etc/opensoho.env
     export OPENSOHO_SHARED_SECRET
 
-    command_args="$OPENSOHO_ADDR:$OPENSOHO_PORT"
+    command_args="serve --http $OPENSOHO_ADDR:$OPENSOHO_PORT"
 }
 
 supervise_daemon=true

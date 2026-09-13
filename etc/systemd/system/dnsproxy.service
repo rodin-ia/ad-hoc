@@ -1,0 +1,27 @@
+[Unit]
+Description=AdGuard DNSProxy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=dnsproxy
+Group=dnsproxy
+
+ExecStart=/opt/dnsproxy/dnsproxy --config-path=/etc/dnsproxy/config.yaml
+
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+
+Restart=on-failure
+RestartSec=5
